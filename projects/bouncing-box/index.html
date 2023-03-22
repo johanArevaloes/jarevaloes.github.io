@@ -8,17 +8,19 @@
 		.box {
 			width: 70px;
 			height: 70px;
-			background-color: teal;
+			background-color: rgba(150, 30, 120, 0.76);
 			font-size: 300%;
 			text-align: center;
 			user-select: none;
 			display: block;
 			position: absolute;
 			top: 100px;
-			left: 0px;  /* <--- Change me! */
+			left: 300px;  /* <--- Change me! */
 		}
 		.board{
 			height: 100vh;
+			background-image: url("paper.gif");
+            background-color: #a13333;
 		}
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
@@ -27,7 +29,8 @@
 <body class="board">
 	<!-- HTML for the box -->
 	<div class="box">?</div>
-
+	
+	<h1>Hey what are you looking at click the box</h1>
 	<script>
 		(function(){
 			'use strict'
@@ -40,7 +43,7 @@
 			var box = jQuery('.box');	// reference to the HTML .box element
 			var board = jQuery('.board');	// reference to the HTML .board element
 			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
-
+            var boardheight = board.height(); // the maximum Y-Coordinate of the screen
 			// Every 50 milliseconds, call the update Function (see below)
 			setInterval(update, 50);
 			
@@ -60,19 +63,28 @@
 			//////////////////////////////////////////////////////////////////
 			/////////////////// YOUR CODE BELOW HERE /////////////////////////
 			//////////////////////////////////////////////////////////////////
-			
-			// TODO 2 - Variable declarations 
-			
 
-			
+			// TODO 2 - Variable declarations 
+           var positionX = 0 + 10;
+		   var points = 0 + 1;
+		   var speed = 10;
+		   var minimumXCoordinate = 0;
+		   
 			/* 
 			This Function will be called 20 times/second. Each time it is called,
 			it should move the Box to a new location. If the box drifts off the screen
 			turn it around! 
 			*/
 			function update() {
-				
-
+		      positionX = positionX + speed;
+			  moveBoxTo(positionX);
+			  if (positionX > boardWidth) {
+				speed = -speed
+			  };
+			  if (positionX < minimumXCoordinate) {
+				speed = -speed
+			  }
+			
 			};
 
 			/* 
@@ -81,8 +93,17 @@
 			the left side of the screen.
 			*/
 			function handleBoxClick() {
-				
+			  positionX = 0;
+			  changeBoxText(1);
+			  points = points + 1;
+              if(speed === +speed){
+				speed = speed + 3 * points
+			  };
+			  if(speed === -speed){
+				speed = speed - 3
+			  };
 
+              changeBoxText(points);
 
 			};
 		})();
